@@ -5,7 +5,9 @@ from datetime import datetime, timezone
 
 app = Flask(__name__)
 
-app.run(host="0.0.0.0", port=5000)
+print("APP STARTED")
+
+app.run(host="0.0.0.0", port=5000, debug=True)
 
 # Database setup (SQLite)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///notes.db'
