@@ -2,7 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
 
+
 app = Flask(__name__)
+
+app.run(host="0.0.0.0", port=5000)
+
 # Database setup (SQLite)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///notes.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
