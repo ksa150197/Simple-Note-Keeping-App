@@ -1,0 +1,37 @@
+The backend of this Flask application acts as the bridge between your web browser, the Python logic, and the SQLite database.
+
+The block with app.app_context(): db.create_all() is crucial. It tells Flask: "Before you start the server, check if 'notes.db' 
+exists; if not, create the table structure defined in the Note class."
+
+1. The Database Model (Note class)
+Instead of using a simple list (which would disappear every time you restart the app), we use SQLAlchemy to create a table in a database file 
+a. (notes.db).id: A unique number for every note so we can find or delete a specific one.
+b. content: The text you actually write.
+c. timestamp: Automatically records when the note was created using datetime.now(timezone.utc).
+
+
+2. Viewing and Searching (index function)
+This is the "Home" route (@app.route('/')). It handles two scenarios:
+
+a. Search: It checks if there is a search parameter in the URL (e.g., ?search=milk). If found, it uses .contains() to filter the database for notes matching that text.
+b. View All: If no search is active, it fetches every note.
+c. Ordering: It uses .order_by(Note.timestamp.desc()) so your newest notes always appear at the top.
+
+
+3. Adding a Note (add_note function)
+When you click "Add Note," the browser sends a POST request.
+a. The app grabs the text from the form using request.form.get('content').
+b. It creates a new Note object.
+c. db.session.add() tells the database to prepare this new note.
+d. db.session.commit() saves it permanently.
+e. Finally, redirect(url_for('index')) sends you back to the home page to see your updated list.
+
+
+4. Deleting a Note (delete_note function)
+This route uses a Variable Rule (<int:id>) in the URL.
+a. When you click delete, the app receives the specific ID of that note.
+b. get_or_404(id): This is a safety check. If you try to delete a note that doesn't exist, it shows a "404 Not Found" error instead of crashing the app.
+c. db.session.delete(): Removes the entry from the database.
+
+
+5. 

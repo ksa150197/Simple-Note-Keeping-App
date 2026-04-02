@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask Notes</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; }
+        .note { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; position: relative; }
+        .timestamp { font-size: 0.8em; color: #666; }
+        .delete-btn { color: red; text-decoration: none; position: absolute; top: 10px; right: 10px; font-weight: bold; }
+        form { margin-bottom: 20px; }
+        textarea { width: 100%; height: 60px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>My Notes</h1>
+    
+    <!-- Add Note Form -->
+    <form action="/add" method="POST">
+        <textarea name="content" placeholder="Write a note..." required></textarea><br>
+        <button type="submit">Add Note</button>
+    </form>
+
+    <!-- Search Form -->
+    <form action="/" method="GET">
+        <input type="text" name="search" placeholder="Search notes..." value="{{ search_query }}">
+        <button type="submit">Search</button>
+        {% if search_query %}<a href="/">Clear Search</a>{% endif %}
+    </form>
+
+    <hr>
+
+    <!-- Display Notes -->
+    {% for note in notes %}
+        <div class="note">
+            <p>{{ note.content }}</p>
+            <div class="timestamp">Created: {{ note.timestamp.strftime('%Y-%m-%d %H:%M') }}</div>
+            <a href="{{ url_for('delete_note', id=note.id) }}" class="delete-btn" onclick="return confirm('Delete this note?')">×</a>
+        </div>
+    {% else %}
+        <p>No notes found.</p>
+    {% endfor %}
+</body>
+</html>
