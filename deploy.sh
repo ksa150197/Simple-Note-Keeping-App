@@ -2,7 +2,7 @@
 
 cd C:\Users\Shubham Anand\Desktop\VS code files and folders\Poject 2
 
-git pull origin main
+git pull origin master
 
 pkill -f Final_app.py
 
