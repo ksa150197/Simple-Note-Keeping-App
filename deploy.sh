@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd C:\Users\Shubham Anand\Desktop\VS code files and folders\Poject 2
+cd /home/ec2-user/project2/Simple-Note-Keeping-App #add your ec2 full working directopry path
 
 git pull origin master
 
